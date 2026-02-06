@@ -86,7 +86,6 @@ public class PasswordFieldTests {
     public void EP_Invalid_IllegalCharacter() {
 
         browser.findElement(By.name("characters")).clear();
-        // 7 תווים אבל עם תו לא חוקי (@)
         browser.findElement(By.name("characters"))
                 .sendKeys("abc12@#");
         browser.findElement(By.name("validate")).click();

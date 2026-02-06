@@ -1,4 +1,5 @@
 package Selleniun_start_projects.Selleniun_start_projects;
+
 import static org.junit.Assert.assertEquals;
 import java.util.concurrent.TimeUnit;
 import org.junit.Before;
@@ -6,8 +7,11 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
 public class CalculatorTests {
+
     static WebDriver browser;
+
     @Before
     public void setup() {
         System.setProperty(
@@ -16,136 +20,131 @@ public class CalculatorTests {
         );
 
         browser = new FirefoxDriver();
-
-        // זמן המתנה לאיתור אלמנטים (אפשר להשאיר כמו שהוא)
         browser.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
         String url = "https://testpages.eviltester.com/apps/button-calculator/";
         browser.get(url);
     }
 
     // ================================
-    // בדיקות חיבור (+) - לפחות 2
+    // חיבור – חיובית
     // ================================
-
     @Test
     public void Add_1_Plus_2_Equals_3() {
-        // לחיצה על 1
+
         browser.findElement(By.id("button01")).click();
-        // לחיצה על +
         browser.findElement(By.id("buttonplus")).click();
-        // לחיצה על 2
         browser.findElement(By.id("button02")).click();
-        // לחיצה על =
+
+        try { Thread.sleep(1000); }
+        catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+
         browser.findElement(By.id("buttonequals")).click();
-        // קריאת תוצאת המחשבון מהשדה
-        String result =
-                browser.findElement(By.id("calculated-display"))
-                        .getAttribute("value");
-        // הערך הצפוי
+
+        String result = browser.findElement(By.id("calculated-display")).getAttribute("value");
         String expected = "3";
         assertEquals(expected, result);
     }
 
+    // ================================
+    // חיבור – שלילית (דיוק עשרוני)
+    // ================================
     @Test
-    public void Add_9_Plus_9_Equals_18() {
-        // לחיצה על 9
-        browser.findElement(By.id("button09")).click();
-        // לחיצה על +
+    public void Add_0Point1_Plus_0Point2_Equals_0Point3() {
+        browser.findElement(By.id("button00")).click();
+        browser.findElement(By.id("buttondot")).click();
+        browser.findElement(By.id("button01")).click();
         browser.findElement(By.id("buttonplus")).click();
-        // לחיצה על 9
-        browser.findElement(By.id("button09")).click();
-        // לחיצה על =
+        browser.findElement(By.id("button00")).click();
+        browser.findElement(By.id("buttondot")).click();
+        browser.findElement(By.id("button02")).click();
+        try { Thread.sleep(1000); }
+        catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         browser.findElement(By.id("buttonequals")).click();
-        // קריאת תוצאת המחשבון מהשדה
-        String result =
-                browser.findElement(By.id("calculated-display"))
-                        .getAttribute("value");
-        // הערך הצפוי
-        String expected = "18";
+        String result = browser.findElement(By.id("calculated-display")).getAttribute("value");
+        String expected = "0.3"; 
         assertEquals(expected, result);
     }
 
     // ================================
-    // בדיקות חיסור (-) - לפחות 2
+    // חיסור – חיובית
     // ================================
-
     @Test
     public void Sub_9_Minus_4_Equals_5() {
-        // לחיצה על 9
+
         browser.findElement(By.id("button09")).click();
-        // לחיצה על -
         browser.findElement(By.id("buttonminus")).click();
-        // לחיצה על 4
         browser.findElement(By.id("button04")).click();
-        // לחיצה על =
+
+        try { Thread.sleep(1000); }
+        catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+
         browser.findElement(By.id("buttonequals")).click();
-        // קריאת תוצאת המחשבון מהשדה
-        String result =
-                browser.findElement(By.id("calculated-display"))
-                        .getAttribute("value");
-        // הערך הצפוי
+
+        String result = browser.findElement(By.id("calculated-display")).getAttribute("value");
         String expected = "5";
         assertEquals(expected, result);
     }
 
+    // ================================
+    // חיסור – שלילית (שרשרת חיסור)
+    // ================================
     @Test
-    public void Sub_3_Minus_7_Equals_Minus4() {
-        // לחיצה על 3
-        browser.findElement(By.id("button03")).click();
-        // לחיצה על -
+    public void Sub_5Point1_Minus_6_ShouldBe_Minus0Point9() {
+        // 5.1
+        browser.findElement(By.id("button05")).click();
+        browser.findElement(By.id("buttondot")).click();
+        browser.findElement(By.id("button01")).click();
         browser.findElement(By.id("buttonminus")).click();
-        // לחיצה על 7
-        browser.findElement(By.id("button07")).click();
-        // לחיצה על =
+        browser.findElement(By.id("button06")).click();
+        try { Thread.sleep(1000); }
+        catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         browser.findElement(By.id("buttonequals")).click();
-        // קריאת תוצאת המחשבון מהשדה
-        String result =
-                browser.findElement(By.id("calculated-display"))
-                        .getAttribute("value");
-        // הערך הצפוי
-        String expected = "-4";
+        String result = browser.findElement(By.id("calculated-display")).getAttribute("value");
+        String expected = "-0.9";
         assertEquals(expected, result);
     }
-    // ================================
-    // בדיקות כפל (×) - לפחות 2
-    // ================================
 
+
+    // ================================
+    // כפל – חיובית
+    // ================================
     @Test
     public void Mul_3_Times_4_Equals_12() {
-        // לחיצה על 3
+
         browser.findElement(By.id("button03")).click();
-        // לחיצה על ×
-        // באתר הזה id של כפל הוא buttonmultiply
         browser.findElement(By.id("buttonmultiply")).click();
-        // לחיצה על 4
         browser.findElement(By.id("button04")).click();
-        // לחיצה על =
+
+        try { Thread.sleep(1000); }
+        catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+
         browser.findElement(By.id("buttonequals")).click();
-        // קריאת תוצאת המחשבון מהשדה
-        String result =
-                browser.findElement(By.id("calculated-display"))
-                        .getAttribute("value");
-        // הערך הצפוי
+
+        String result = browser.findElement(By.id("calculated-display")).getAttribute("value");
         String expected = "12";
         assertEquals(expected, result);
     }
 
+    // ================================
+    // כפל – שלילית (חסר אופרן שני → בפועל יוצא 81)
+    // ================================
     @Test
-    public void Mul_0_Times_8_Equals_0() {
-        // לחיצה על 0
-        browser.findElement(By.id("button00")).click();
-        // לחיצה על ×
+    public void Mul_9_Times_MissingSecondOperand_ShouldNotCalculate() {
+
+        browser.findElement(By.id("button09")).click();
         browser.findElement(By.id("buttonmultiply")).click();
-        // לחיצה על 8
-        browser.findElement(By.id("button08")).click();
-        // לחיצה על =
+
+        try { Thread.sleep(1000); }
+        catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+
         browser.findElement(By.id("buttonequals")).click();
-        // קריאת תוצאת המחשבון מהשדה
-        String result =
-                browser.findElement(By.id("calculated-display"))
-                        .getAttribute("value");
-        // הערך הצפוי
-        String expected = "0";
+
+        String result = browser.findElement(By.id("calculated-display")).getAttribute("value");
+
+        // מצופה לוגית: לא לחשב ולהשאיר 9
+        // בפועל באתר: 81 → ולכן הבדיקה תיכשל ותחשוף באג
+        String expected = "9";
         assertEquals(expected, result);
     }
 }
