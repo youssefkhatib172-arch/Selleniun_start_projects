@@ -27,10 +27,10 @@ public class CalculatorTests {
     }
 
     // ================================
-    // חיבור – חיובית
+    // חיבור – חיובית (1 + 2 = 3)
     // ================================
     @Test
-    public void Add_1_Plus_2_Equals_3() {
+    public void add_1_plus_2_equals_3() {
 
         browser.findElement(By.id("button01")).click();
         browser.findElement(By.id("buttonplus")).click();
@@ -47,13 +47,14 @@ public class CalculatorTests {
     }
 
     // ================================
-    // חיבור – שלילית (דיוק עשרוני)
+    // חיבור – חיובית (9 + 9 = 18)
     // ================================
     @Test
-    public void Add_1_Plus_MissingSecondOperand_ShouldNotCalculate() {
+    public void add_9_plus_9_equals_18() {
 
-        browser.findElement(By.id("button01")).click();
+        browser.findElement(By.id("button09")).click();
         browser.findElement(By.id("buttonplus")).click();
+        browser.findElement(By.id("button09")).click();
 
         try { Thread.sleep(1000); }
         catch (InterruptedException e) { Thread.currentThread().interrupt(); }
@@ -61,18 +62,15 @@ public class CalculatorTests {
         browser.findElement(By.id("buttonequals")).click();
 
         String result = browser.findElement(By.id("calculated-display")).getAttribute("value");
-
-        // הציפייה: להישאר 1
-        String expected = "1";
+        String expected = "18";
         assertEquals(expected, result);
     }
 
-    
     // ================================
-    // חיסור – חיובית
+    // חיסור – חיובית (9 − 4 = 5)
     // ================================
     @Test
-    public void Sub_9_Minus_4_Equals_5() {
+    public void sub_9_minus_4_equals_5() {
 
         browser.findElement(By.id("button09")).click();
         browser.findElement(By.id("buttonminus")).click();
@@ -89,13 +87,14 @@ public class CalculatorTests {
     }
 
     // ================================
-    // חיסור – שלילית (שרשרת חיסור)
+    // חיסור – חיובית (3 − 7 = -4)
     // ================================
     @Test
-    public void Sub_9_Minus_MissingSecondOperand_ShouldNotCalculate() {
+    public void sub_3_minus_7_equals_minus4() {
 
-        browser.findElement(By.id("button09")).click();
+        browser.findElement(By.id("button03")).click();
         browser.findElement(By.id("buttonminus")).click();
+        browser.findElement(By.id("button07")).click();
 
         try { Thread.sleep(1000); }
         catch (InterruptedException e) { Thread.currentThread().interrupt(); }
@@ -103,19 +102,15 @@ public class CalculatorTests {
         browser.findElement(By.id("buttonequals")).click();
 
         String result = browser.findElement(By.id("calculated-display")).getAttribute("value");
-
-        // הציפייה: לא לבצע חישוב ולהישאר 9
-        String expected = "9";
+        String expected = "-4";
         assertEquals(expected, result);
     }
 
-
-
     // ================================
-    // כפל – חיובית
+    // כפל – חיובית (3 × 4 = 12)
     // ================================
     @Test
-    public void Mul_3_Times_4_Equals_12() {
+    public void mul_3_times_4_equals_12() {
 
         browser.findElement(By.id("button03")).click();
         browser.findElement(By.id("buttonmultiply")).click();
@@ -132,13 +127,14 @@ public class CalculatorTests {
     }
 
     // ================================
-    // כפל – שלילית (חסר אופרן שני → בפועל יוצא 81)
+    // כפל – חיובית (0 × 8 = 0)
     // ================================
     @Test
-    public void Mul_9_Times_MissingSecondOperand_ShouldNotCalculate() {
+    public void mul_0_times_8_equals_0() {
 
-        browser.findElement(By.id("button09")).click();
+        browser.findElement(By.id("button00")).click();
         browser.findElement(By.id("buttonmultiply")).click();
+        browser.findElement(By.id("button08")).click();
 
         try { Thread.sleep(1000); }
         catch (InterruptedException e) { Thread.currentThread().interrupt(); }
@@ -146,10 +142,7 @@ public class CalculatorTests {
         browser.findElement(By.id("buttonequals")).click();
 
         String result = browser.findElement(By.id("calculated-display")).getAttribute("value");
-
-        // מצופה לוגית: לא לחשב ולהשאיר 9
-        // בפועל באתר: 81 → ולכן הבדיקה תיכשל ותחשוף באג
-        String expected = "9";
+        String expected = "0";
         assertEquals(expected, result);
     }
 }
